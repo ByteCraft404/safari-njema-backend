@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
 import AuthRoutes from "./routes/AuthRoutes.js";
@@ -10,8 +12,7 @@ import DriverRoutes from "./routes/DriverRoutes.js";
 import EventRoutes from "./routes/EventRoutes.js";
 import ScheduleRoutes from "./routes/ScheduleRoutes.js";
 import VehicleRoutes from "./routes/VehicleRoutes.js";
-import dotenv from "dotenv";
-dotenv.config();
+
 
 import ConnectToDB from "./config/db.js";
 
@@ -26,7 +27,7 @@ app.use(
   })
 );
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.send("Hello World");
 });
 app.use("/auth", AuthRoutes);
 app.use("/trips", TripRoutes);
@@ -40,6 +41,14 @@ app.use("/api/schedules", ScheduleRoutes);
 app.use("/api/vehicles", VehicleRoutes);
 
 app.listen(PORT, async () => {
-  await ConnectToDB();
-  console.log(`app running at http://localhost:${PORT}`);
+  try {
+    await ConnectToDB();
+    console.log(`Server Backend running at localhost:${PORT}`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
 });
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
+console.log("MONGO_URI:", process.env.MONGO_URL);
+console.log("PORT:", PORT);

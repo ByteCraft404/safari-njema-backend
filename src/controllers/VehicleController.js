@@ -6,7 +6,8 @@ export const getAllVehicles = async (req, res) => {
     const vehicles = await Vehicle.find();
     res.status(200).json(vehicles);
   } catch (error) {
-    res.status(500).json({ message: "Failed to fetch vehicles", error });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -17,6 +18,7 @@ export const addVehicle = async (req, res) => {
     const savedVehicle = await newVehicle.save();
     res.status(201).json(savedVehicle);
   } catch (error) {
-    res.status(500).json({ message: "Failed to add vehicle", error });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };

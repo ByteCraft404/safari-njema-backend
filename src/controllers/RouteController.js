@@ -52,6 +52,6 @@ export const createRoute = async (req, res) => {
     res.status(201).json(savedRoute);
   } catch (error) {
     console.error("Error adding route:", error);
-    res.status(500).json({ message: "Server error while adding route." });
+    res.status(500).json({ success: false, message: error.message });
   }
 };

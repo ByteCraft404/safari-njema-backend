@@ -6,7 +6,8 @@ export const createCity = async (req, res) => {
     await city.save();
     res.status(201).json(city);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -15,6 +16,7 @@ export const getAllCities = async (req, res) => {
     const cities = await City.find();
     res.status(200).json(cities);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };

@@ -6,7 +6,8 @@ export const searchTrips = async (req, res) => {
     const trips = await Trip.find({ fromCity, toCity });
     res.status(200).json(trips);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -15,7 +16,8 @@ export const getTripDetails = async (req, res) => {
     const trip = await Trip.findById(req.params.id);
     res.status(200).json(trip);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 export const getAllTrips = async (req, res) => {
@@ -23,6 +25,7 @@ export const getAllTrips = async (req, res) => {
     const trips = await Trip.find();
     res.status(200).json(trips);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };

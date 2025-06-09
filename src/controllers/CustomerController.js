@@ -6,7 +6,8 @@ export const registerCustomer = async (req, res) => {
     const newCustomer = await Customer.create(req.body);
     res.status(201).json(newCustomer);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -16,7 +17,8 @@ export const getAllCustomers = async (req, res) => {
     const customers = await Customer.find();
     res.status(200).json(customers);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -28,7 +30,8 @@ export const getCustomerById = async (req, res) => {
       return res.status(404).json({ message: "Customer not found" });
     res.status(200).json(customer);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -44,7 +47,8 @@ export const updateCustomer = async (req, res) => {
       return res.status(404).json({ message: "Customer not found" });
     res.status(200).json(updatedCustomer);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -56,6 +60,7 @@ export const deleteCustomer = async (req, res) => {
       return res.status(404).json({ message: "Customer not found" });
     res.status(200).json({ message: "Customer deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
