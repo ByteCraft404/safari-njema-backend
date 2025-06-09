@@ -10,6 +10,8 @@ import DriverRoutes from "./routes/DriverRoutes.js";
 import EventRoutes from "./routes/EventRoutes.js";
 import ScheduleRoutes from "./routes/ScheduleRoutes.js";
 import VehicleRoutes from "./routes/VehicleRoutes.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 import ConnectToDB from "./config/db.js";
 
