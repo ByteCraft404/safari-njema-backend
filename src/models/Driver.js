@@ -13,6 +13,8 @@ const driverSchema = new mongoose.Schema({
   vehicleType: String,
   experience: String,
   status: { type: String, enum: ["Active", "Inactive"], default: "Active" },
+  profileImage: String,
+  assignedVehicle: { type: String, default: "" }, // store vehicle id or regNumber
 });
 
 export default mongoose.model("Driver", driverSchema);

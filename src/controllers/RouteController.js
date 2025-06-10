@@ -1,5 +1,6 @@
 import Route from "../models/Route.js";
 
+// Get all routes
 export const getAllRoutes = async (req, res) => {
   try {
     const routes = await Route.find();
@@ -8,6 +9,8 @@ export const getAllRoutes = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Create a new route
 export const createRoute = async (req, res) => {
   try {
     const {
@@ -53,5 +56,49 @@ export const createRoute = async (req, res) => {
   } catch (error) {
     console.error("Error adding route:", error);
     res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// Update route info
+export const updateRoute = async (req, res) => {
+  try {
+    const updatedRoute = await Route.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedRoute)
+      return res.status(404).json({ message: "Route not found" });
+    res.json(updatedRoute);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Change route status (activate/deactivate)
+export const updateRouteStatus = async (req, res) => {
+  try {
+    const { active } = req.body;
+    const route = await Route.findByIdAndUpdate(
+      req.params.id,
+      { active },
+      { new: true }
+    );
+    if (!route) return res.status(404).json({ message: "Route not found" });
+    res.json(route);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Delete route
+export const deleteRoute = async (req, res) => {
+  try {
+    const route = await Route.findByIdAndDelete(req.params.id);
+    if (!route)
+      return res.status(404).json({ message: "Route not found" });
+    res.json({ message: "Route deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

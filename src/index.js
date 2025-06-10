@@ -18,11 +18,12 @@ import ConnectToDB from "./config/db.js";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: '2mb' }));
+app.use(express.urlencoded({ limit: '2mb', extended: true }));
 app.use(
   cors({
     origin: "http://localhost:5173",
-    methods: "GET,POST,PUT,DELETE",
+    methods: "GET,POST,PUT,DELETE,PATCH", // <-- Add PATCH here
     allowedHeaders: "Content-Type,Authorization",
   })
 );
@@ -35,7 +36,7 @@ app.use("/bookings", BookingRoutes);
 app.use("/customers", CustomerRoutes);
 app.use("/api/cities", CityRoutes);
 app.use("/api/routes", RouteRoutes);
-app.use("/api/driver", DriverRoutes);
+app.use("/api/drivers", DriverRoutes);
 app.use("/api/events", EventRoutes);
 app.use("/api/schedules", ScheduleRoutes);
 app.use("/api/vehicles", VehicleRoutes);
@@ -43,12 +44,11 @@ app.use("/api/vehicles", VehicleRoutes);
 app.listen(PORT, async () => {
   try {
     await ConnectToDB();
-    console.log(`Server Backend running at localhost:${PORT}`);
+    console.log(`Server Is Awake And Running `);
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: error.message });
   }
 });
-console.log("JWT_SECRET:", process.env.JWT_SECRET);
-console.log("MONGO_URI:", process.env.MONGO_URL);
-console.log("PORT:", PORT);
+
+console.log("Server Port:", PORT);

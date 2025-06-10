@@ -12,11 +12,17 @@ const vehicleSchema = new mongoose.Schema({
   condition: String,
   purchaseDate: String,
   assignedDriver: String,
+  route: String,
+  departureTime: String,
+  arrivalTime: String,
+  status: String,
   airConditioned: Boolean,
   wifi: Boolean,
   tv: Boolean,
   refreshments: Boolean,
   imageUrl: String,
+  lastMaintenance: String,
+  assignedVehicle: { type: String, default: "" }, // store vehicle id or regNumber
 });
 
 export default mongoose.model("Vehicle", vehicleSchema);
