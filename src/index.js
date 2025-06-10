@@ -22,8 +22,11 @@ app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ limit: '2mb', extended: true }));
 app.use(
   cors({
-    origin: "https://john645-3cdq.onrender.com", // Replace with your frontend URL
-    methods: "GET,POST,PUT,DELETE,PATCH", 
+    origin: [
+      "http://localhost:5173",
+      "https://john645-3cdq.onrender.com"
+    ],
+    methods: "GET,POST,PUT,DELETE,PATCH",
     allowedHeaders: "Content-Type,Authorization",
     credentials: true,
   })
