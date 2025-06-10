@@ -71,7 +71,7 @@ app.use("/api/vehicles", VehicleRoutes);
   try {
     await ConnectToDB();
     app.listen(PORT, () => {
-      console.log(`Server is Awake And Running on port ${PORT}`);
+      console.log(`Server is Awake And Running`);
     });
   } catch (error) {
     console.error('Failed to start server due to database connection error:', error.message);
@@ -79,4 +79,4 @@ app.use("/api/vehicles", VehicleRoutes);
   }
 })();
 
-console.log("Server Port (at script start):", PORT); 
+console.log("Server Port:", PORT); 
