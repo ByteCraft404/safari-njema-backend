@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import cors from "cors";
+
+
 import AuthRoutes from "./routes/AuthRoutes.js";
 import TripRoutes from "./routes/TripRoutes.js";
 import BookingRoutes from "./routes/BookingRoutes.js";
@@ -16,20 +18,42 @@ import VehicleRoutes from "./routes/VehicleRoutes.js";
 
 import ConnectToDB from "./config/db.js";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const app = express();
+
+
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ limit: '2mb', extended: true }));
-app.use(
-  cors({
-    origin: 'https://johnny-n43c.onrender.com',
-    methods: "GET,POST,PUT,DELETE,PATCH", // <-- Add PATCH here
-    allowedHeaders: "Content-Type,Authorization",
-  })
-);
+
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'https://safari-njema-frontend.onrender.com',
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.error(`CORS: Origin ${origin} not allowed.`);
+      callback(new Error('Not allowed by CORS'), false);
+    }
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", 
+  allowedHeaders: "Content-Type,Authorization", 
+  credentials: true,
+}));
+
+
+
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Hello World Safari Njema Backend is running.");
 });
+
+
 app.use("/auth", AuthRoutes);
 app.use("/trips", TripRoutes);
 app.use("/bookings", BookingRoutes);
@@ -41,14 +65,18 @@ app.use("/api/events", EventRoutes);
 app.use("/api/schedules", ScheduleRoutes);
 app.use("/api/vehicles", VehicleRoutes);
 
-app.listen(PORT, async () => {
+
+
+(async () => {
   try {
     await ConnectToDB();
-    console.log(`Server Is Awake And Running `);
+    app.listen(PORT, () => {
+      console.log(`Server is Awake And Running on port ${PORT}`);
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: error.message });
+    console.error('Failed to start server due to database connection error:', error.message);
+    process.exit(1);
   }
-});
+})();
 
-console.log("Server Port:", PORT);
+console.log("Server Port (at script start):", PORT); 
