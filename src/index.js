@@ -22,7 +22,7 @@ app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ limit: '2mb', extended: true }));
 app.use(
   cors({
-    origin: 'https://johnny-n43c.onrender.com',
+    origin: 'https://johnny-mg4p.onrender.com',
     methods: "GET,POST,PUT,DELETE,PATCH", 
     allowedHeaders: "Content-Type,Authorization",
     credentials: true,
