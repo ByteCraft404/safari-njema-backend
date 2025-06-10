@@ -29,7 +29,7 @@ app.use(
   })
 );
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Hello World Welcome To The Development Server Side of safariNjema....Its your boy ByteCraft404");
 });
 app.use("/auth", AuthRoutes);
 app.use("/trips", TripRoutes);
