@@ -2,8 +2,8 @@ import express from "express";
 import {
   createBooking,
   confirmBooking,
-} from "../controllers/BookingController.js";
-import { cancelBooking } from "../controllers/BookingController.js";
+} from "../controllers/bookingcontroller.js";
+import { cancelBooking } from "../controllers/bookingcontroller.js";
 
 const router = express.Router();
 
